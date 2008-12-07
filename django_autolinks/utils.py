@@ -52,5 +52,5 @@ def process_links(text):
     save_links(links_with_urls)
     load_links(links_without_urls)
 
-    return text + '\n'.join('[%(slug)s]: %(url)s' % link for link in links_without_urls)
+    return text + ''.join('\n[%(slug)s]: %(url)s' % link for link in links_without_urls)
 

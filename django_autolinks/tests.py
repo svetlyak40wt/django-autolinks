@@ -68,9 +68,9 @@ class Autolinks(TestCase):
             separate_links(all))
 
     def testMagick(self):
-        result = self.second_text + '\n'.join((
-                    '[second post]: http://second.ru',
-                    '[minor]: http://example.com',))
+        result = self.second_text + ''.join((
+                    '\n[second post]: http://second.ru',
+                    '\n[minor]: http://example.com',))
 
         self.assertEqual(
             self.first_text,
