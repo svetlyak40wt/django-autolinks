@@ -28,5 +28,29 @@ def save_links(links):
             obj.save()
 
 def load_links(links):
+    for link in links:
+        try:
+            obj = Link.objects.get(slug=link['slug'])
+            link['url'] = obj.url
+        except Link.DoesNotExist:
+            pass
     return links
+
+def separate_links(links):
+    '''Returns tuple with two lists.
+       First list contains all links with URLs
+       and second list contains links without URSs.'''
+
+    return (
+            [link for link in links if link['url'] is not None],
+            [link for link in links if link['url'] is None]
+           )
+
+def process_links(text):
+    links_with_urls, links_without_urls = separate_links(
+                                            extract_links(text))
+    save_links(links_with_urls)
+    load_links(links_without_urls)
+
+    return text + '\n'.join('[%(slug)s]: %(url)s' % link for link in links_without_urls)
 
